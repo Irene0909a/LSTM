@@ -15,7 +15,7 @@ data = pd.read_csv(r'C:/Users/irene1017a/OneDrive/Project/基金/Quarter perform
 data.columns
 
 data.isnull().sum()
-     
+num_col = len(data.columns) 
 
 # 共變異數矩陣
 cov_matrix = data.pct_change().apply(lambda x: np.log(1+x)).cov()
@@ -45,7 +45,7 @@ for port in range(port_nums):
     weights = weights/np.sum(weights)
     port_weights.append(weights)
     returns = np.dot(weights, expected_return)
-    port_ret.append(returns)
+    port_ret.append(returns)https://github.com/Irene0909a/Self-Study/blob/main/%E6%8A%95%E8%B3%87%E7%B5%84%E5%90%88.py
     var = cov_matrix.mul(weights, axis=0).mul(weights, axis=1).sum().sum()
     sd = np.sqrt(var)
     ann_sd = sd*np.sqrt(90)
@@ -92,7 +92,13 @@ eff_front_ret = pd.Series(ret)
 mvp_std = min(eff_front_std)
 print('MVP風險為: ' + str(round(mvp_std,4)))
 
+col_names = portfolios.columns[2:num_col+1]
+result = []
+for i in range(len(eff_front_set)):
+    values = [eff_front_set.iloc[i][col] for col in col_names]
+    result.append(tuple(values))
 
+result = [list(t) for t in result]
 # 找夏普比率最大的投組
 max_sharpe = -1
 max_sharpe_returns = -1
@@ -104,35 +110,7 @@ for i in range(len(eff_front_set)):
         max_sharpe = sharpe
         max_sharpe_std = eff_front_set.iloc[i,:]['Standard Dev.']
         max_sharpe_returns = eff_front_set.iloc[i,:]['Returns']
-        max_sharpe_set = (eff_front_set.iloc[i,:][portfolios.columns[2]], eff_front_set.iloc[i,:][portfolios.columns[3]],
-                          eff_front_set.iloc[i,:][portfolios.columns[4]], eff_front_set.iloc[i,:][portfolios.columns[5]],
-                          eff_front_set.iloc[i,:][portfolios.columns[6]], eff_front_set.iloc[i,:][portfolios.columns[7]],
-                          eff_front_set.iloc[i,:][portfolios.columns[8]], eff_front_set.iloc[i,:][portfolios.columns[9]],
-                          eff_front_set.iloc[i,:][portfolios.columns[10]], eff_front_set.iloc[i,:][portfolios.columns[11]],
-                          eff_front_set.iloc[i,:][portfolios.columns[12]], eff_front_set.iloc[i,:][portfolios.columns[13]],
-                          eff_front_set.iloc[i,:][portfolios.columns[14]], eff_front_set.iloc[i,:][portfolios.columns[15]],
-                          eff_front_set.iloc[i,:][portfolios.columns[16]], eff_front_set.iloc[i,:][portfolios.columns[17]],
-                          eff_front_set.iloc[i,:][portfolios.columns[18]], eff_front_set.iloc[i,:][portfolios.columns[19]],
-                          eff_front_set.iloc[i,:][portfolios.columns[20]], eff_front_set.iloc[i,:][portfolios.columns[21]],
-                          eff_front_set.iloc[i,:][portfolios.columns[22]], eff_front_set.iloc[i,:][portfolios.columns[23]],
-                          eff_front_set.iloc[i,:][portfolios.columns[24]], eff_front_set.iloc[i,:][portfolios.columns[25]],
-                          eff_front_set.iloc[i,:][portfolios.columns[26]], eff_front_set.iloc[i,:][portfolios.columns[27]],
-                          eff_front_set.iloc[i,:][portfolios.columns[28]], eff_front_set.iloc[i,:][portfolios.columns[29]],
-                          eff_front_set.iloc[i,:][portfolios.columns[30]], eff_front_set.iloc[i,:][portfolios.columns[31]],
-                          eff_front_set.iloc[i,:][portfolios.columns[32]], eff_front_set.iloc[i,:][portfolios.columns[33]],
-                          eff_front_set.iloc[i,:][portfolios.columns[34]], eff_front_set.iloc[i,:][portfolios.columns[35]],
-                          eff_front_set.iloc[i,:][portfolios.columns[36]], eff_front_set.iloc[i,:][portfolios.columns[37]],
-                          eff_front_set.iloc[i,:][portfolios.columns[38]], eff_front_set.iloc[i,:][portfolios.columns[39]],
-                          eff_front_set.iloc[i,:][portfolios.columns[40]], eff_front_set.iloc[i,:][portfolios.columns[41]],
-                          eff_front_set.iloc[i,:][portfolios.columns[42]], eff_front_set.iloc[i,:][portfolios.columns[43]],
-                          eff_front_set.iloc[i,:][portfolios.columns[44]], eff_front_set.iloc[i,:][portfolios.columns[45]],
-                          eff_front_set.iloc[i,:][portfolios.columns[46]], eff_front_set.iloc[i,:][portfolios.columns[47]],
-                          eff_front_set.iloc[i,:][portfolios.columns[48]], eff_front_set.iloc[i,:][portfolios.columns[49]],
-                          eff_front_set.iloc[i,:][portfolios.columns[50]], eff_front_set.iloc[i,:][portfolios.columns[51]],
-                          eff_front_set.iloc[i,:][portfolios.columns[52]], eff_front_set.iloc[i,:][portfolios.columns[53]],
-                          eff_front_set.iloc[i,:][portfolios.columns[54]], eff_front_set.iloc[i,:][portfolios.columns[55]],
-                          eff_front_set.iloc[i,:][portfolios.columns[56]], eff_front_set.iloc[i,:][portfolios.columns[57]],
-                          eff_front_set.iloc[i,:][portfolios.columns[58]])
+        max_sharpe_set = result
 print("夏普比率最大點的報酬率與標準差 ", "(Returns, Standard Dev.) =", (max_sharpe_returns, max_sharpe_std))
 print("夏普比率最大點的投組",portfolios.columns , max_sharpe_set)
 portfolios.columns[58]
