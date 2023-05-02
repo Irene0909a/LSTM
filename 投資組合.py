@@ -71,8 +71,8 @@ std = []
 ret = [portfolios[portfolios['Standard Dev.'] == portfolios['Standard Dev.'].min()]['Returns'].values[0]]
 portfolios.columns
 eff_front_set = pd.DataFrame(columns=portfolios.columns)
-for i in range(20,1000,1):
-    df = portfolios[(portfolios['Standard Dev.'] >= i/10000) & (portfolios['Standard Dev.'] <= (i+15)/10000)]
+for i in range(1,1000,1):
+    df = portfolios[(portfolios['Standard Dev.'] >= i/1000) & (portfolios['Standard Dev.'] <= (i+15)/1000)]
     try:
         # 上側
         max_ret = df[df['Returns'] == df['Returns'].max()]['Returns'].values[0]
