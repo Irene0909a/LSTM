@@ -45,7 +45,7 @@ for port in range(port_nums):
     weights = weights/np.sum(weights)
     port_weights.append(weights)
     returns = np.dot(weights, expected_return)
-    port_ret.append(returns)https://github.com/Irene0909a/Self-Study/blob/main/%E6%8A%95%E8%B3%87%E7%B5%84%E5%90%88.py
+    port_ret.append(returns)
     var = cov_matrix.mul(weights, axis=0).mul(weights, axis=1).sum().sum()
     sd = np.sqrt(var)
     ann_sd = sd*np.sqrt(90)
